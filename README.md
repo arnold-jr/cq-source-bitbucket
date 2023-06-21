@@ -1,7 +1,7 @@
 # CloudQuery bitbucket Source Plugin
 
-[![test](https://github.com/figg/cq-source-bitbucket/actions/workflows/test.yaml/badge.svg)](https://github.com/figg/cq-source-bitbucket/actions/workflows/test.yaml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/figg/cq-source-bitbucket)](https://goreportcard.com/report/github.com/figg/cq-source-bitbucket)
+[![test](https://github.com/arnold-jr/cq-source-bitbucket/actions/workflows/test.yaml/badge.svg)](https://github.com/arnold-jr/cq-source-bitbucket/actions/workflows/test.yaml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/arnold-jr/cq-source-bitbucket)](https://goreportcard.com/report/github.com/arnold-jr/cq-source-bitbucket)
 
 A bitbucket source plugin for CloudQuery that loads data from bitbucket to any database, data warehouse or data lake supported by [CloudQuery](https://www.cloudquery.io/), such as PostgreSQL, BigQuery, Athena, and many more.
 
@@ -19,7 +19,7 @@ The following source configuration file will sync to a PostgreSQL database. See 
 kind: source
 spec:
   name: "bitbucket"
-  path: "figg/bitbucket"
+  path: "arnold-jr/bitbucket"
   version: "${VERSION}"
   destinations:
     - "postgresql"
