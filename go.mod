@@ -1,4 +1,4 @@
-module github.com/figg/cq-source-bitbucket
+module github.com/arnold-jr/cq-source-bitbucket
 
 go 1.18
 
