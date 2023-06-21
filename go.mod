@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/cloudquery/plugin-pb-go v1.0.9
 	github.com/cloudquery/plugin-sdk/v3 v3.10.4
+	github.com/davecgh/go-spew v1.1.1
 	github.com/ktrysmt/go-bitbucket v0.9.60
 	github.com/rs/zerolog v1.29.0
 )
@@ -16,7 +17,6 @@ require (
 	github.com/apache/arrow/go/v13 v13.0.0-20230531201200-cbc17a98dfd9 // indirect
 	github.com/apache/thrift v0.16.0 // indirect
 	github.com/cloudquery/plugin-sdk/v2 v2.7.0 // indirect
-	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/getsentry/sentry-go v0.20.0 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/goccy/go-json v0.9.11 // indirect

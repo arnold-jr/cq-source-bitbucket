@@ -1,6 +1,6 @@
 kind: source
 spec:
-  name: "crowdstrike"
+  name: "pipelib"
   registry: "grpc"
   path: "localhost:7777"
   version: "v1.0.0"

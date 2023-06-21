@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/arnold-jr/cq-source-bitbucket/client"
-	
+	"github.com/davecgh/go-spew/spew"
 	"github.com/cloudquery/plugin-sdk/v3/schema"
 	"github.com/cloudquery/plugin-sdk/v3/transformers"
 	bb "github.com/ktrysmt/go-bitbucket"
@@ -20,13 +20,16 @@ func Bitbucket() *schema.Table {
 }
 
 func fetchRepos(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
-	c := meta.(*client.Client) 
+	c := meta.(*client.Client)
 
-	foo := "foo"	
 	page := 0	
-	repo_opts := &bb.RepositoriesOptions{Owner: "", Role: "", Page: &page, Keyword: &foo}
+	repo_opts := &bb.RepositoriesOptions{Owner: "figg",Page: &page}
 	resp, err := c.Bitbucket.Repositories.ListForAccount(repo_opts)
+	
+	spew.Dump(resp)
+	spew.Dump(err)
 	if err != nil {
+		fmt.Println(err)	
 		return err
 	}
 
