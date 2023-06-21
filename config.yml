@@ -1,6 +1,6 @@
 kind: source
 spec:
-  name: "pipelib"
+  name: "terraform"
   registry: "grpc"
   path: "localhost:7777"
   version: "v1.0.0"

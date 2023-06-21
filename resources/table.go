@@ -22,8 +22,10 @@ func Bitbucket() *schema.Table {
 func fetchRepos(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	c := meta.(*client.Client)
 
-	page := 0	
-	repo_opts := &bb.RepositoriesOptions{Owner: "figg",Page: &page}
+	//page := 0	
+	//repo_opts := &bb.RepositoriesOptions{Owner: "figg", Role: "member"}
+	kw := "pipe"	
+	repo_opts := &bb.RepositoriesOptions{Keyword: &kw}
 	resp, err := c.Bitbucket.Repositories.ListForAccount(repo_opts)
 	
 	spew.Dump(resp)
