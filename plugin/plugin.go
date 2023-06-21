@@ -17,7 +17,7 @@ func Plugin() *source.Plugin {
 		"figg-bitbucket",
 		Version,
 		schema.Tables{
-			resources.SampleTable(),
+			resources.Bitbucket(),
 		},
 		client.New,
 	)
