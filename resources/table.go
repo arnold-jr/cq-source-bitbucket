@@ -2,6 +2,7 @@ package resources
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/arnold-jr/cq-source-bitbucket/client"
 	
@@ -31,6 +32,7 @@ func fetchRepos(ctx context.Context, meta schema.ClientMeta, parent *schema.Reso
 
 	for _, value := range resp.Items {
 		res <- value 
+		fmt.Println(res)	
 	}
 	return nil
 }

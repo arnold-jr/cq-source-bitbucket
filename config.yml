@@ -1,0 +1,19 @@
+kind: source
+spec:
+  name: "crowdstrike"
+  registry: "grpc"
+  path: "localhost:7777"
+  version: "v1.0.0"
+  tables: 
+    ["*"]
+  destinations:
+    - "sqlite"
+---
+kind: destination
+spec:
+  name: sqlite
+  path: cloudquery/sqlite
+  version: "v2.2.0"
+  migrate_mode: forced
+  spec:
+    connection_string: ./db.sql
