@@ -161,13 +161,16 @@ func GetRepositories(workspace string, appPass string, appUser string) ([]Reposi
 		req.SetBasicAuth(appUser, appPass)
 
 		res, err := client.Do(req)
-		
+
 		spew.Dump(res.StatusCode)
-		//spew.Dump(res.Body)
+
+		if res.StatusCode != 200 {
+			return nil, fmt.Errorf("Expected statuscode 200 but got: %d", res.StatusCode)
+		}
 		if err != nil {
 			return nil, fmt.Errorf("Error retrieving repositories: %s", err.Error())
 		}
-	
+
 		defer res.Body.Close()
 
 		getRepositoriesOutput := &GetRepositoriesOutput{}
