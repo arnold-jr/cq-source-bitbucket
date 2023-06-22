@@ -11,8 +11,8 @@ import (
 
 func Repos() *schema.Table {
 	return &schema.Table{
-		Name:     "bitbucket_repos_table",
-		Resolver: fetchRepos,
+		Name:      "bitbucket_repositories",
+		Resolver:  fetchRepos,
 		Transform: transformers.TransformWithStruct(&bb.Repository{}),
 	}
 }
@@ -20,15 +20,14 @@ func Repos() *schema.Table {
 func fetchRepos(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	c := meta.(*client.Client)
 
-	conf := c.Config
-	repositories, err := bb.GetRepositories(conf.Workspace, conf.Password, conf.Username)
-	
+	repositories, err := c.Bitbucket.GetRepositories()
 	if err != nil {
 		return err
 	}
 
 	for _, value := range repositories {
-		res <- value 
+		res <- value
 	}
+
 	return nil
 }
