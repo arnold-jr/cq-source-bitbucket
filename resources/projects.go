@@ -15,7 +15,7 @@ func Projects() *schema.Table {
 	return &schema.Table{
 		Name:     "bitbucket_projects_table",
 		Resolver: fetchProjects,
-		Transform: transformers.TransformWithStruct(&bb.Project{}),
+		Transform: transformers.TransformWithStruct(&bb.Project{},transformers.WithPrimaryKeys("ID")),
 	}
 }
 

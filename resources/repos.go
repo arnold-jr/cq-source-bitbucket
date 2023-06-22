@@ -15,7 +15,7 @@ func Repos() *schema.Table {
 	return &schema.Table{
 		Name:     "bitbucket_repos_table",
 		Resolver: fetchRepos,
-		Transform: transformers.TransformWithStruct(&bb.Repository{}),
+		Transform: transformers.TransformWithStruct(&bb.Repository{},transformers.WithPrimaryKeys("UUID")),
 	}
 }
 
