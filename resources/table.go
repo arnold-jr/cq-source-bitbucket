@@ -22,18 +22,25 @@ func Bitbucket() *schema.Table {
 func fetchRepos(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	c := meta.(*client.Client)
 
-	//page := 0	
+	page := 1
 	//repo_opts := &bb.RepositoriesOptions{Owner: "figg", Role: "member"}
-	kw := "pipe"	
-	repo_opts := &bb.RepositoriesOptions{Keyword: &kw}
+	repo_opts := &bb.RepositoriesOptions{Owner: "figg", Role: "member", Page: &page}
 	resp, err := c.Bitbucket.Repositories.ListForAccount(repo_opts)
 	
 	spew.Dump(resp)
 	spew.Dump(err)
+	
 	if err != nil {
 		fmt.Println(err)	
 		return err
 	}
+
+	workspaceName := "Figg"
+	resp, err := &c.Bitbucket.Workspaces.Get(workspaceName)
+	
+	spew.Dump(resp)
+	spew.Dump(err)
+	
 
 	for _, value := range resp.Items {
 		res <- value 
