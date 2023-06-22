@@ -11,7 +11,7 @@ import (
 	"github.com/cloudquery/plugin-sdk/v3/transformers"
 )
 
-func BitbucketRepos() *schema.Table {
+func Repos() *schema.Table {
 	return &schema.Table{
 		Name:     "bitbucket_repos_table",
 		Resolver: fetchRepos,

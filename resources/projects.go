@@ -11,7 +11,7 @@ import (
 	"github.com/cloudquery/plugin-sdk/v3/transformers"
 )
 
-func BitbucketProjects() *schema.Table {
+func Projects() *schema.Table {
 	return &schema.Table{
 		Name:     "bitbucket_projects_table",
 		Resolver: fetchProjects,
