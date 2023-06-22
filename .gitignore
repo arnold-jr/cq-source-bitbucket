@@ -23,3 +23,6 @@ db.sql
 
 # Go workspace file
 go.work
+
+data/
+cq-source-bitbucket
