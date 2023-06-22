@@ -23,7 +23,7 @@ type User struct {
 	} `json:"workspace"`
 }
 
-func (u User) ToUserforCQ() (UserForCQ) {
+func (u User) ToUserforCQ() UserForCQ {
 	return UserForCQ{
 		Username: u.Links.Self.Name,
 	}
@@ -78,7 +78,7 @@ func (c *Client) GetUsers() ([]User, error) {
 		if len(output.Values) < pageLength {
 			break
 		}
-	
+
 	}
 	return users, nil
 }
