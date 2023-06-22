@@ -64,7 +64,7 @@ func (c *Client) GetUsers() ([]User, error) {
 		if len(output.Values) < pageLength {
 			break
 		}
+	
 	}
-
-	return ususersersresources, nil
+	return users, nil
 }

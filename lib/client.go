@@ -25,7 +25,6 @@ func New() *Client {
 func (c *Client) request(url string, pageLength, curPage int) (*http.Response, error) {
 	client := http.Client{Timeout: 5 * time.Second}
 
-	// url := fmt.Sprintf(`https://api.bitbucket.org/2.0/workspaces/%s/members`, workspace)
 	req, err := http.NewRequest(http.MethodGet, url, http.NoBody)
 	if err != nil {
 		return nil, fmt.Errorf("Error creating users requests url: %s", err.Error())
