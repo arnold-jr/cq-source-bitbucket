@@ -24,19 +24,17 @@ func fetchRepos(ctx context.Context, meta schema.ClientMeta, parent *schema.Reso
 	//c := meta.(*client.Client)
 
 	workspace := os.Getenv("BITBUCKET_WORKSPACE")
-	bitbucketClientID := os.Getenv("BITBUCKET_USERNAME")
-	bitbucketSecret := os.Getenv("BITBUCKET_PASSWORD")
+	bitbucketUser := os.Getenv("BITBUCKET_USERNAME")
+	bitbucketPass := os.Getenv("BITBUCKET_PASSWORD")
 
-	repositories, err := &bb.GetRepositories(workspace, bitbucketSecret, bitbucketClientID)
-
-	if err != nil {
-		fmt.Println(err)	
-		return err
-	}
-
+	repositories, err := bb.GetRepositories(workspace, bitbucketPass, bitbucketUser)
+	
 	spew.Dump(repositories)
 	spew.Dump(err)
-	
+
+	if err != nil {
+		return err
+	}
 
 	for _, value := range repositories {
 		res <- value 
