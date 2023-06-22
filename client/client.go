@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 
-	//bb "github.com/arnold-jr/cq-source-bitbucket/lib"
 	"github.com/cloudquery/plugin-pb-go/specs"
 	"github.com/cloudquery/plugin-sdk/v3/plugins/source"
 	"github.com/cloudquery/plugin-sdk/v3/schema"
@@ -24,7 +23,6 @@ type Client struct {
 }
 
 func (c *Client) ID() string {
-	// TODO: Change to either your plugin name or a unique dynamic identifier
 	return "Bitbucket"
 }
 
