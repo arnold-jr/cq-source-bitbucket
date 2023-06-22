@@ -230,7 +230,7 @@ type GetProjectsOutput struct {
 	Projects []Project `json:"values"`
 }
 
-func GetProjects(workspace string, appPass string, appUser string) ([]Project, error) {
+func GetRepositories(workspace string, appPass string, appUser string) ([]Repository, error) {
 	repos := []Repository{}
 	pageLength := 50
 	curPage := 1
