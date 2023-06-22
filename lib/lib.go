@@ -154,9 +154,7 @@ func GetRepositories(workspace string, appPass string, appUser string) ([]Reposi
 		q.Set("pagelen", strconv.Itoa(pageLength))
 		q.Set("page", strconv.Itoa(curPage))
 		req.URL.RawQuery = q.Encode()
-
-		fmt.Println(req.URL.String())
-
+		
 		req.SetBasicAuth(appUser, appPass)
 
 		res, err := client.Do(req)
