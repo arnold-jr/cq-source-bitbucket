@@ -17,7 +17,7 @@ func Plugin() *source.Plugin {
 		"arnold-jr-bitbucket",
 		Version,
 		schema.Tables{
-			resources.Repos(),
+			resources.BitbucketRepos(),
 			resources.BitbucketUsers(),
 			resources.BitbucketProjects(),
 		},
