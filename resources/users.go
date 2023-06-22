@@ -13,7 +13,7 @@ func Users() *schema.Table {
 	return &schema.Table{
 		Name:      "bitbucket_users",
 		Resolver:  fetchUsers,
-		Transform: transformers.TransformWithStruct(&bb.User{}, transformers.WithPrimaryKeys("")),
+		Transform: transformers.TransformWithStruct(&bb.UserForCQ{}),
 	}
 }
 

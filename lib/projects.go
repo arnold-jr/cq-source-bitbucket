@@ -30,7 +30,7 @@ func (c *Client) GetProjects() ([]Project, error) {
 		curPage      = 1
 	)
 
-	url := fmt.Sprintf(`https://api.bitbucket.org/2.0/workspace/%s/projects`, c.workspace)
+	url := fmt.Sprintf(`https://api.bitbucket.org/2.0/workspaces/%s/projects`, c.workspace)
 
 	for {
 		res, err := c.request(url, pageLength, curPage)

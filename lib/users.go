@@ -21,6 +21,10 @@ type User struct {
 	} `json:"workspace"`
 }
 
+type UserForCQ struct {
+	Username string
+}
+
 type GetUsersOutput struct {
 	Size     int    `json:"size"`
 	Page     int    `json:"page"`
