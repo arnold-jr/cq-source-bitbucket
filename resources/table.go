@@ -3,12 +3,13 @@ package resources
 import (
 	"context"
 	"fmt"
+	"os"
 
-	"github.com/arnold-jr/cq-source-bitbucket/client"
+	//"github.com/arnold-jr/cq-source-bitbucket/client"
+	bb "github.com/arnold-jr/cq-source-bitbucket/lib"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/cloudquery/plugin-sdk/v3/schema"
 	"github.com/cloudquery/plugin-sdk/v3/transformers"
-	bb "github.com/ktrysmt/go-bitbucket"
 )
 
 func Bitbucket() *schema.Table {
@@ -20,29 +21,24 @@ func Bitbucket() *schema.Table {
 }
 
 func fetchRepos(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
-	c := meta.(*client.Client)
+	//c := meta.(*client.Client)
 
-	page := 1
-	//repo_opts := &bb.RepositoriesOptions{Owner: "figg", Role: "member"}
-	repo_opts := &bb.RepositoriesOptions{Owner: "figg", Role: "member", Page: &page}
-	resp, err := c.Bitbucket.Repositories.ListForAccount(repo_opts)
-	
-	spew.Dump(resp)
-	spew.Dump(err)
-	
+	workspace := os.Getenv("BITBUCKET_WORKSPACE")
+	bitbucketClientID := os.Getenv("BITBUCKET_USERNAME")
+	bitbucketSecret := os.Getenv("BITBUCKET_PASSWORD")
+
+	repositories, err := &bb.GetRepositories(workspace, bitbucketSecret, bitbucketClientID)
+
 	if err != nil {
 		fmt.Println(err)	
 		return err
 	}
 
-	workspaceName := "Figg"
-	resp, err := &c.Bitbucket.Workspaces.Get(workspaceName)
-	
-	spew.Dump(resp)
+	spew.Dump(repositories)
 	spew.Dump(err)
 	
 
-	for _, value := range resp.Items {
+	for _, value := range repositories {
 		res <- value 
 		fmt.Println(res)	
 	}
