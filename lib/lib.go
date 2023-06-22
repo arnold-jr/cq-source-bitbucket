@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"time"
 		
-	"github.com/davecgh/go-spew/spew"
 )
 
 type GetRepositoriesOutput struct {
@@ -161,8 +160,6 @@ func GetRepositories(workspace string, appPass string, appUser string) ([]Reposi
 		req.SetBasicAuth(appUser, appPass)
 
 		res, err := client.Do(req)
-
-		spew.Dump(res.StatusCode)
 
 		if res.StatusCode != 200 {
 			return nil, fmt.Errorf("Expected statuscode 200 but got: %d", res.StatusCode)

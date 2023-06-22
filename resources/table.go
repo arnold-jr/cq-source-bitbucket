@@ -6,7 +6,6 @@ import (
 
 	"github.com/arnold-jr/cq-source-bitbucket/client"
 	bb "github.com/arnold-jr/cq-source-bitbucket/lib"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/cloudquery/plugin-sdk/v3/schema"
 	"github.com/cloudquery/plugin-sdk/v3/transformers"
 )
@@ -23,18 +22,15 @@ func fetchRepos(ctx context.Context, meta schema.ClientMeta, parent *schema.Reso
 	c := meta.(*client.Client)
 
 	conf := c.Config
-	repositories, err := bb.GetRepositories(conf.Workspace, conf.Username, conf.Password)
+	repositories, err := bb.GetRepositories(conf.Workspace, conf.Password, conf.Username)
 	
-	spew.Dump(repositories)
-	spew.Dump(err)
-
 	if err != nil {
 		return err
 	}
 
 	for _, value := range repositories {
 		res <- value 
-		fmt.Println(res)	
+		fmt.Println(value)	
 	}
 	return nil
 }

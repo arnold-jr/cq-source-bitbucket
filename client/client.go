@@ -14,8 +14,8 @@ import (
 
 type ClientConf struct {
 	Workspace string
-	Username string
 	Password string
+	Username string
 }
 
 type Client struct {
@@ -39,7 +39,7 @@ func New(ctx context.Context, logger zerolog.Logger, s specs.Source, opts source
 	bitbucketUser := os.Getenv("BITBUCKET_USERNAME")
 	bitbucketPass := os.Getenv("BITBUCKET_PASSWORD")
 
-	conf := ClientConf{Workspace: workspace, Username: bitbucketUser, Password: bitbucketPass}
+	conf := ClientConf{Workspace: workspace, Password: bitbucketPass, Username: bitbucketUser}
 	
 	return &Client{
 		Logger: logger,
