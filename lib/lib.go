@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+		
+	"github.com/davecgh/go-spew/spew"
 )
 
 type GetRepositoriesOutput struct {
@@ -159,10 +161,13 @@ func GetRepositories(workspace string, appPass string, appUser string) ([]Reposi
 		req.SetBasicAuth(appUser, appPass)
 
 		res, err := client.Do(req)
+		
+		spew.Dump(res.StatusCode)
+		//spew.Dump(res.Body)
 		if err != nil {
 			return nil, fmt.Errorf("Error retrieving repositories: %s", err.Error())
 		}
-
+	
 		defer res.Body.Close()
 
 		getRepositoriesOutput := &GetRepositoriesOutput{}

@@ -35,23 +35,9 @@ func New(ctx context.Context, logger zerolog.Logger, s specs.Source, opts source
 		return nil, fmt.Errorf("failed to unmarshal plugin spec: %w", err)
 	}
   
-  getEnv := func(key string) (string, error) {
-      val, ok := os.LookupEnv(key)
-      if !ok {
-          fmt.Printf("%s not set\n", key)
-					return "", fmt.Errorf("failed")
-      } else {
-          fmt.Printf("%s=%s\n", key, val)
-          return val, nil
-      }
-  }
-	//workspace, wsNotSet := os.LookupEnv("BITBUCKET_WORKSPACE")
-	workspace, _ := getEnv("BITBUCKET_WORKSPACE")	
-	//if wsNotSet := true; {
-	//	return nil, fmt.Error("BITBUCKET_WORKSPACE not set")
-	//}
-	bitbucketUser, _ := getEnv("BITBUCKET_USERNAME")
-	bitbucketPass, _ := getEnv("BITBUCKET_PASSWORD")
+	workspace := os.Getenv("BITBUCKET_WORKSPACE")	
+	bitbucketUser := os.Getenv("BITBUCKET_USERNAME")
+	bitbucketPass := os.Getenv("BITBUCKET_PASSWORD")
 
 	conf := ClientConf{Workspace: workspace, Username: bitbucketUser, Password: bitbucketPass}
 	
