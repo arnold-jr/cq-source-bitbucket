@@ -215,7 +215,7 @@ func GetProjects(workspace string, appPass string, appUser string) ([]Project, e
 	for {
 		client := http.Client{Timeout: 5 * time.Second}
 
-		url := fmt.Sprintf(`https://api.bitbucket.org/2.0/projects/%s`, workspace)
+		url := fmt.Sprintf(`https://api.bitbucket.org/2.0/workspaces/%s/projects`, workspace)
 		req, err := http.NewRequest(http.MethodGet, url, http.NoBody)
 		if err != nil {
 			return nil, fmt.Errorf("Error creating projects requests url: %s", err.Error())
