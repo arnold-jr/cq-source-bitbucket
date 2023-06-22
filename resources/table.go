@@ -3,9 +3,8 @@ package resources
 import (
 	"context"
 	"fmt"
-	"os"
 
-	//"github.com/arnold-jr/cq-source-bitbucket/client"
+	"github.com/arnold-jr/cq-source-bitbucket/client"
 	bb "github.com/arnold-jr/cq-source-bitbucket/lib"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/cloudquery/plugin-sdk/v3/schema"
@@ -21,13 +20,10 @@ func Bitbucket() *schema.Table {
 }
 
 func fetchRepos(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
-	//c := meta.(*client.Client)
+	c := meta.(*client.Client)
 
-	workspace := os.Getenv("BITBUCKET_WORKSPACE")
-	bitbucketUser := os.Getenv("BITBUCKET_USERNAME")
-	bitbucketPass := os.Getenv("BITBUCKET_PASSWORD")
-
-	repositories, err := bb.GetRepositories(workspace, bitbucketPass, bitbucketUser)
+	conf := c.Config
+	repositories, err := bb.GetRepositories(conf.Workspace, conf.Username, conf.Password)
 	
 	spew.Dump(repositories)
 	spew.Dump(err)
