@@ -26,7 +26,7 @@ func fetchUsers(ctx context.Context, meta schema.ClientMeta, parent *schema.Reso
 	}
 
 	for _, value := range users {
-		res <- value
+		res <- value.ToUserforCQ()
 	}
 	return nil
 }

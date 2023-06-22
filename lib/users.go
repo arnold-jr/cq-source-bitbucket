@@ -3,6 +3,8 @@ package lib
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 type User struct {
@@ -19,6 +21,12 @@ type User struct {
 	Workspace struct {
 		Type string `json:"type"`
 	} `json:"workspace"`
+}
+
+func (u User) ToUserforCQ() (UserForCQ) {
+	return UserForCQ{
+		Username: u.Links.Self.Name,
+	}
 }
 
 type UserForCQ struct {
@@ -58,6 +66,8 @@ func (c *Client) GetUsers() ([]User, error) {
 
 		output := &GetUsersOutput{}
 		err = json.NewDecoder(res.Body).Decode(output)
+		fmt.Println(res.Body)
+		spew.Dump(output)
 		if err != nil {
 			return nil, fmt.Errorf("Error decoding response output: %s", err.Error())
 		}
