@@ -23,7 +23,7 @@ func fetchProjects(ctx context.Context, meta schema.ClientMeta, parent *schema.R
 	c := meta.(*client.Client)
 
 	conf := c.Config
-	projects, err := bb.GetProjects(conf.Workspace, conf.Username, conf.Password)
+	projects, err := bb.GetProjects(conf.Workspace, conf.Password, conf.Username)
 	
 	spew.Dump(projects)
 	spew.Dump(err)

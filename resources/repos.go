@@ -23,7 +23,7 @@ func fetchRepos(ctx context.Context, meta schema.ClientMeta, parent *schema.Reso
 	c := meta.(*client.Client)
 
 	conf := c.Config
-	repositories, err := bb.GetRepositories(conf.Workspace, conf.Username, conf.Password)
+	repositories, err := bb.GetRepositories(conf.Workspace, conf.Password, conf.Username)
 	
 	spew.Dump(repositories)
 	spew.Dump(err)
