@@ -5,16 +5,62 @@ import (
 	"fmt"
 )
 
+type ProjectAPIResponse struct {
+	Size     int    `json:"size"`
+	Page     int    `json:"page"`
+	Pagelen  int    `json:"pagelen"`
+	Next     string `json:"next"`
+	Previous string `json:"previous"`
+	Values   []struct {
+		Type  string `json:"type"`
+		Links struct {
+			HTML struct {
+				Href string `json:"href"`
+				Name string `json:"name"`
+			} `json:"html"`
+			Avatar struct {
+				Href string `json:"href"`
+				Name string `json:"name"`
+			} `json:"avatar"`
+		} `json:"links"`
+		UUID  string `json:"uuid"`
+		Key   string `json:"key"`
+		Owner struct {
+			Type string `json:"type"`
+		} `json:"owner"`
+		Name                    string `json:"name"`
+		Description             string `json:"description"`
+		IsPrivate               bool   `json:"is_private"`
+		CreatedOn               string `json:"created_on"`
+		UpdatedOn               string `json:"updated_on"`
+		HasPubliclyVisibleRepos bool   `json:"has_publicly_visible_repos"`
+	} `json:"values"`
+}
+
 type Project struct {
-	Name        string `json:"name"`
-	Key         string `json:"key"`
-	ID          int    `json:"id"`
-	Type        string `json:"type"`
-	Public      bool   `json:"public"`
-	Scope       string `json:"scope"`
-	Description string `json:"description"`
-	Namespace   string `json:"namespace"`
-	Avatar      string `json:"avatar"`
+	Type  string `json:"type"`
+	Links struct {
+		HTML struct {
+			Href string `json:"href"`
+			Name string `json:"name"`
+		} `json:"html"`
+		Avatar struct {
+			Href string `json:"href"`
+			Name string `json:"name"`
+		} `json:"avatar"`
+	} `json:"links"`
+	UUID  string `json:"uuid"`
+	Key   string `json:"key"`
+	Owner struct {
+		Type string `json:"type"`
+	} `json:"owner"`
+	Name                    string `json:"name"`
+	Description             string `json:"description"`
+	IsPrivate               bool   `json:"is_private"`
+	CreatedOn               string `json:"created_on"`
+	UpdatedOn               string `json:"updated_on"`
+	HasPubliclyVisibleRepos bool   `json:"has_publicly_visible_repos"`
+
 }
 
 

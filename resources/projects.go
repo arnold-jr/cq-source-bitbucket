@@ -13,7 +13,7 @@ func Projects() *schema.Table {
 	return &schema.Table{
 		Name:      "bitbucket_projects",
 		Resolver:  fetchProjects,
-		Transform: transformers.TransformWithStruct(&bb.Project{}, transformers.WithPrimaryKeys("ID")),
+		Transform: transformers.TransformWithStruct(&bb.Project{}, transformers.WithPrimaryKeys("UUID")),
 	}
 }
 
