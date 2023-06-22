@@ -190,7 +190,10 @@ type GetUsersOutput struct {
 	Pagelen  int    `json:"pagelen"`
 	Next     string `json:"next"`
 	Previous string `json:"previous"`
-	Values   []struct {
+	Values   []User `json:"values"`
+}
+	
+type User struct {
 		Type  string `json:"type"`
 		Links struct {
 			Self struct {
@@ -204,7 +207,55 @@ type GetUsersOutput struct {
 		Workspace struct {
 			Type string `json:"type"`
 		} `json:"workspace"`
-	} `json:"values"`
+}
+
+
+func GetUsers(workspace string, appPass string, appUser string) ([]User, error) {
+	users := []User{}
+	pageLength := 50
+	curPage := 1
+
+	for {
+		client := http.Client{Timeout: 5 * time.Second}
+
+		url := fmt.Sprintf(`https://api.bitbucket.org/2.0/workspaces/%s/members`, workspace)
+		req, err := http.NewRequest(http.MethodGet, url, http.NoBody)
+		if err != nil {
+			return nil, fmt.Errorf("Error creating users requests url: %s", err.Error())
+		}
+
+		q := req.URL.Query()
+		q.Set("pagelen", strconv.Itoa(pageLength))
+		q.Set("page", strconv.Itoa(curPage))
+		req.URL.RawQuery = q.Encode()
+		
+		req.SetBasicAuth(appUser, appPass)
+
+		res, err := client.Do(req)
+
+		if res.StatusCode != 200 {
+			return nil, fmt.Errorf("Expected statuscode 200 but got: %d", res.StatusCode)
+		}
+		if err != nil {
+			return nil, fmt.Errorf("Error retrieving users: %s", err.Error())
+		}
+
+		defer res.Body.Close()
+
+		getUsersOutput := &GetUsersOutput{}
+		err = json.NewDecoder(res.Body).Decode(getUsersOutput)
+		if err != nil {
+			return nil, fmt.Errorf("Error decoding response output: %s", err.Error())
+		}
+
+		users = append(users, getUsersOutput.Values...)
+		curPage++
+
+		if len(getUsersOutput.Values) < pageLength {
+			break
+		}
+	}
+	return users, nil
 }
 
 type GetProjectsOutput struct {
@@ -225,3 +276,4 @@ type GetProjectsOutput struct {
 	IsLastPage    bool `json:"isLastPage"`
 	NextPageStart int  `json:"nextPageStart"`
 }
+
