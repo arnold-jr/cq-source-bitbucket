@@ -277,3 +277,97 @@ func GetRepositories(workspace string, appPass string, appUser string) ([]Reposi
 	}
 	return repos, nil
 }
+
+type GetUsersOutput struct {
+	Size     int    `json:"size"`
+	Page     int    `json:"page"`
+	Pagelen  int    `json:"pagelen"`
+	Next     string `json:"next"`
+	Previous string `json:"previous"`
+	Values   []User `json:"values"`
+}
+	
+type User struct {
+		Type  string `json:"type"`
+		Links struct {
+			Self struct {
+				Href string `json:"href"`
+				Name string `json:"name"`
+			} `json:"self"`
+		} `json:"links"`
+		User struct {
+			Type string `json:"type"`
+		} `json:"user"`
+		Workspace struct {
+			Type string `json:"type"`
+		} `json:"workspace"`
+}
+
+
+func GetUsers(workspace string, appPass string, appUser string) ([]User, error) {
+	users := []User{}
+	pageLength := 50
+	curPage := 1
+
+	for {
+		client := http.Client{Timeout: 5 * time.Second}
+
+		url := fmt.Sprintf(`https://api.bitbucket.org/2.0/workspaces/%s/members`, workspace)
+		req, err := http.NewRequest(http.MethodGet, url, http.NoBody)
+		if err != nil {
+			return nil, fmt.Errorf("Error creating users requests url: %s", err.Error())
+		}
+
+		q := req.URL.Query()
+		q.Set("pagelen", strconv.Itoa(pageLength))
+		q.Set("page", strconv.Itoa(curPage))
+		req.URL.RawQuery = q.Encode()
+		
+		req.SetBasicAuth(appUser, appPass)
+
+		res, err := client.Do(req)
+
+		if res.StatusCode != 200 {
+			return nil, fmt.Errorf("Expected statuscode 200 but got: %d", res.StatusCode)
+		}
+		if err != nil {
+			return nil, fmt.Errorf("Error retrieving users: %s", err.Error())
+		}
+
+		defer res.Body.Close()
+
+		getUsersOutput := &GetUsersOutput{}
+		err = json.NewDecoder(res.Body).Decode(getUsersOutput)
+		if err != nil {
+			return nil, fmt.Errorf("Error decoding response output: %s", err.Error())
+		}
+
+		users = append(users, getUsersOutput.Values...)
+		curPage++
+
+		if len(getUsersOutput.Values) < pageLength {
+			break
+		}
+	}
+	return users, nil
+}
+
+type GetProjectsOutput struct {
+	Values []struct {
+		Name        string `json:"name"`
+		Key         string `json:"key"`
+		ID          int    `json:"id"`
+		Type        string `json:"type"`
+		Public      bool   `json:"public"`
+		Scope       string `json:"scope"`
+		Description string `json:"description"`
+		Namespace   string `json:"namespace"`
+		Avatar      string `json:"avatar"`
+	} `json:"values"`
+	Size          int  `json:"size"`
+	Limit         int  `json:"limit"`
+	Start         int  `json:"start"`
+	IsLastPage    bool `json:"isLastPage"`
+	NextPageStart int  `json:"nextPageStart"`
+}
+
