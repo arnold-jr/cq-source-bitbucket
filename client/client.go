@@ -3,8 +3,8 @@ package client
 import (
 	"context"
 	"fmt"
-	"os"
 
+	bb "github.com/arnold-jr/cq-source-bitbucket/lib"
 	"github.com/cloudquery/plugin-pb-go/specs"
 	"github.com/cloudquery/plugin-sdk/v3/plugins/source"
 	"github.com/cloudquery/plugin-sdk/v3/schema"
@@ -13,13 +13,13 @@ import (
 
 type ClientConf struct {
 	Workspace string
-	Password string
-	Username string
+	Password  string
+	Username  string
 }
 
 type Client struct {
-	Logger zerolog.Logger
-	Config ClientConf
+	Logger    zerolog.Logger
+	Bitbucket *bb.Client
 }
 
 func (c *Client) ID() string {
@@ -32,15 +32,11 @@ func New(ctx context.Context, logger zerolog.Logger, s specs.Source, opts source
 	if err := s.UnmarshalSpec(&pluginSpec); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal plugin spec: %w", err)
 	}
-  
-	workspace := os.Getenv("BITBUCKET_WORKSPACE")	
-	bitbucketUser := os.Getenv("BITBUCKET_USERNAME")
-	bitbucketPass := os.Getenv("BITBUCKET_PASSWORD")
 
-	conf := ClientConf{Workspace: workspace, Password: bitbucketPass, Username: bitbucketUser}
-	
+	bitbucketClient := bb.New()
+
 	return &Client{
-		Logger: logger,
-		Config: conf,
+		Logger:    logger,
+		Bitbucket: bitbucketClient,
 	}, nil
 }

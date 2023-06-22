@@ -11,25 +11,22 @@ import (
 
 func Users() *schema.Table {
 	return &schema.Table{
-		Name:     "bitbucket_users_table",
-		Resolver: fetchUsers,
-		Transform: transformers.TransformWithStruct(&bb.User{}),
+		Name:      "bitbucket_users",
+		Resolver:  fetchUsers,
+		Transform: transformers.TransformWithStruct(&bb.User{}, transformers.WithPrimaryKeys("")),
 	}
 }
 
 func fetchUsers(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- interface{}) error {
 	c := meta.(*client.Client)
 
-	conf := c.Config
-	repositories, err := bb.GetUsers(conf.Workspace, conf.Password, conf.Username)
-	
+	users, err := c.Bitbucket.GetUsers()
 	if err != nil {
 		return err
 	}
 
-	for _, value := range repositories {
-		res <- value 
+	for _, value := range users {
+		res <- value
 	}
 	return nil
 }
-
