@@ -13,7 +13,7 @@ func Users() *schema.Table {
 	return &schema.Table{
 		Name:      "bitbucket_users",
 		Resolver:  fetchUsers,
-		Transform: transformers.TransformWithStruct(&bb.UserForCQ{}),
+		Transform: transformers.TransformWithStruct(&bb.User{},transformers.WithPrimaryKeys("UUID")),
 	}
 }
 
@@ -25,8 +25,8 @@ func fetchUsers(ctx context.Context, meta schema.ClientMeta, parent *schema.Reso
 		return err
 	}
 
-	for _, value := range users {
-		res <- value.ToUserforCQ()
+	for _, user := range users {
+		res <- user
 	}
 	return nil
 }
