@@ -60,9 +60,7 @@ type Project struct {
 	CreatedOn               string `json:"created_on"`
 	UpdatedOn               string `json:"updated_on"`
 	HasPubliclyVisibleRepos bool   `json:"has_publicly_visible_repos"`
-
 }
-
 
 type GetProjectsOutput struct {
 	Projects []Project `json:"values"`
@@ -71,9 +69,9 @@ type GetProjectsOutput struct {
 func (c *Client) GetProjects() ([]Project, error) {
 
 	var (
-		projects = []Project{}
-		pageLength   = 50
-		curPage      = 1
+		projects   = []Project{}
+		pageLength = 50
+		curPage    = 1
 	)
 
 	url := fmt.Sprintf(`https://api.bitbucket.org/2.0/workspaces/%s/projects`, c.workspace)
